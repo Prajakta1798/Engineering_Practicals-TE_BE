@@ -1,0 +1,56 @@
+--  provided for instantiating Xilinx primitive components.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity mux_struct is
+    Port ( a : in std_logic;
+           b : in std_logic;
+           c : in std_logic;
+           d : in std_logic;
+           s0 : in std_logic;
+           s1 : in std_logic;
+           y : out std_logic);
+end mux_struct;
+
+architecture Behavioral of mux_struct is
+
+component mux2x1 is
+Port ( a,b,s : in  STD_LOGIC;
+y : out  STD_LOGIC);
+end component;
+signal t1,t2: std_logic;
+begin
+m1:mux2x1 port map (a,b,s0,t1);
+m2:mux2x1 port map (c,d,s0,t2);
+m3:mux2x1 port map (t1,t2,s1,y);
+end Behavioral;
+
+############################
+
+2:1 
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+--  Uncomment the following lines to use the declarations that are
+--  provided for instantiating Xilinx primitive components.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity mux2x1 is
+    Port ( a : in std_logic;
+           b : in std_logic;
+           s : in std_logic;
+           y : out std_logic);
+end mux2x1;
+
+architecture Behavioral of mux2x1 is
+
+begin
+
+with s select
+
+y<= a when '0',
+    b when others;
+end Behavioral;

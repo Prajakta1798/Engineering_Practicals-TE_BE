@@ -1,0 +1,34 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity full_adder is
+    Port ( a,b,cin : in  STD_LOGIC;
+           sum,cout : out  STD_LOGIC);
+end full_adder;
+
+
+architecture fa_str of full_adder is
+component xor2
+	port(d1,d2:in std_logic;
+	dz:out std_logic);
+end component;
+component or2
+	port(n1,n2:std_logic;
+	z:out std_logic);
+end component;
+component and2
+	port(a1,a2:in std_logic;
+	u:out std_logic);
+end component;
+signal s1,s2,s3,s4,s5:std_logic;
+begin
+	x1:xor2 port map(a,b,s1);
+	x2:xor2 port map(s1,cin,sum);
+	r1:and2 port map(a,b,s2);
+	r2:and2 port map(b,cin,s3);
+	r3:and2 port map(a,cin,s4);
+	o1:or2 port map(s2,s3,s5);
+	o2:or2 port map(s4,s5,cout);
+end fa_str;
