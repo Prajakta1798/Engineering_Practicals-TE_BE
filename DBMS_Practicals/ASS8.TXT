@@ -1,0 +1,130 @@
+Assignment – 8[Group: B]
+-----------------------------------------------------------------------------------------------------------------------
+Title:Write and execute PL/SQL stored procedure and function to perform a suitable task on the database. Demonstrate its use.				
+
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+------------------------------------------------------------------------------------------------------------------------
+
+
+SQL> CREATE TABLE EMP_08 (ID INT PRIMARY KEY ,NAME CHAR(10),JOININGDATE DATE,SAL INT);
+
+Table created.
+
+SQL> INSERT INTO EMP_08 VALUES(100,'RAM','12-AUG-98',5000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(200,'RAJESH','13-NOV-96',7000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(300,'SHAM','23-NOV-98',10000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(400,'SHARAD','25-JULY-97',2000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(500,'SHAKIT','12-JUN-98',15000);
+
+1 row created.
+
+
+SQL> SELECT * FROM EMP_08;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+       500 SHAKIT     12-JUN-98      15000                                      
+
+SQL> SET SERVEROUTPUT ON;
+SQL> CREATE OR REPLACE PROCEDURE PROC_08(PID NUMBER)
+  2  IS
+  3  VNAME CHAR(10);
+  4  VSAL NUMBER(5);
+  5  BEGIN
+  6  SELECT NAME,SAL INTO VNAME,VSAL FROM EMP_08 WHERE ID=PID;
+  7  DBMS_OUTPUT.PUT_LINE(VNAME||','||VSAL);
+  8  END;
+  9  /
+
+Procedure created.
+
+SQL> CALL PROC_08(300);
+SHAM      ,10000                                                                
+
+Call completed.
+
+SQL> BEGIN
+  2  PROC_08(300);
+  3  END;
+  4  /
+SHAM      ,10000                                                                
+
+PL/SQL procedure successfully completed.
+
+SQL> EXEC PROC_08(300);
+SHAM      ,10000                                                                
+
+PL/SQL procedure successfully completed.
+-------------------------------------------------------------------------------------------------------------------------------------------
+SQL> CREATE OR REPLACE PROCEDURE SQ_08(X IN OUT NUMBER)
+  2  IS
+  3  BEGIN
+  4  X := X * X;
+  5  END;
+  6  /
+
+Procedure created.
+
+SQL> DECLARE
+  2   A NUMBER;
+  3  BEGIN
+  4  A := 5;
+  5  SQ_08(A);
+  6  DBMS_OUTPUT.PUT_LINE('SQUARE OF (5)'||A);
+  7  END;
+  8  /
+SQUARE OF (5)25                                                                 
+
+PL/SQL procedure successfully completed.
+--------------------------------------------------------------------------------------------------------------------------------------------
+SQL> CREATE OR REPLACE FUNCTION MAX1_08( X IN NUMBER, Y IN NUMBER)
+  2  RETURN NUMBER
+  3  IS
+  4  Z NUMBER ;
+  5  BEGIN
+  6  IF X>Y THEN
+  7  Z := X;
+  8  ELSE
+  9  Z := Y;
+ 10  END IF;
+ 11  RETURN Z;
+ 12  END;
+ 13  /
+
+Function created.
+
+SQL> DECLARE
+  2   A NUMBER;
+  3   B NUMBER;
+  4   C NUMBER;
+  5  BEGIN
+  6  A := 3;
+  7  B := 5;
+  8  C :=MAX1_08(A,B);
+  9  DBMS_OUTPUT.PUT_LINE('MAXIMUM OF 3 AND 5 IS '|| C);
+ 10  END;
+ 11  /
+MAXIMUM OF 3 AND 5 IS 5                                                             
+
+PL/SQL procedure successfully completed.
+
+SQL> SPOOL OFF;

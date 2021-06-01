@@ -1,0 +1,205 @@
+Assignment – 6[Group: B]
+-----------------------------------------------------------------------------------------------------------------------
+Title:Implement nested sub queries. Perform a test for set membership (in, not in), set comparison 
+(<some, >=some, <all etc.) and set cardinality (unique, not unique).					   
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+------------------------------------------------------------------------------------------------------------------------
+SQL> SELECT * FROM EMP_08;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+       500 SHAKIT     12-JUN-98      15000                                      
+
+SQL> CREATE TABLE EDEPT_08( ID INT, DEPT CHAR(10));
+
+Table created.
+
+SQL> INSERT INTO EDEPT_08 VALUES(100,'COMPUTER');
+
+1 row created.
+
+SQL> INSERT INTO EDEPT_08 VALUES(200,'IT');
+
+1 row created.
+
+SQL> INSERT INTO EDEPT_08 VALUES(300,'ETC');
+
+1 row created.
+
+SQL> INSERT INTO EDEPT_08 VALUES(400,'CIVIL');
+
+1 row created.
+
+SQL> INSERT INTO EDEPT_08 VALUES(500,'MECHANICAL');
+
+1 row created.
+
+SQL> SELECT * FROM EDEPT_08;
+
+        ID DEPT                                                                 
+---------- ----------                                                           
+       100 COMPUTER                                                             
+       200 IT                                                                   
+       300 ETC                                                                  
+       400 CIVIL                                                                
+       500 MECHANICAL                                                           
+
+
+SQL> SELECT * FROM EMP_08 WHERE ID IN(SELECT  ID FROM EDEPT_08 WHERE DEPT='COMPUTER');
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+
+SQL> UPDATE EMP_08 SET SAL =SAL*0.5 WHERE ID IN (SELECT ID FROM EDEPT_08 WHERE DEPT='CIVIL' );
+
+1 row updated.
+
+SQL> SELECT * FROM EMP_08;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       1000                                      
+       500 SHAKIT     12-JUN-98      15000                                      
+
+SQL> DELETE FROM EMP_08 WHERE ID IN(SELECT ID FROM EDEPT_08 WHERE DEPT='COMPUTER');
+
+1 row deleted.
+
+SQL> SELECT * FROM EMP_08;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       1000                                      
+       500 SHAKIT     12-JUN-98      15000                                      
+
+SQL> UPDATE EMP_08  SET SAL=SAL*0.50 WHERE ID NOT IN (SELECT ID FROM EDEPT_08 WHERE DEPT='IT');
+
+3 rows updated.
+
+SQL> SELECT * FROM EMP_08;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       300 SHAM       23-NOV-98       5000                                      
+       400 SHARAD     25-JUL-97        500                                      
+       500 SHAKIT     12-JUN-98       7500                                      
+
+SQL> DELETE FROM EMP_08 WHERE ID NOT IN (SELECT ID FROM EDEPT_08 WHERE DEPT='COMPUTER' );
+
+4 rows deleted.
+
+SQL> SELECT * FROM EMP_08;
+
+no rows selected
+---------------------------------------------------------------------------------------------------------------------------------------------
+SQL> CREATE TABLE EMP1_08(ID INT ,NAME CHAR(10),CITY CHAR(10),SAL INT);
+
+Table created.
+
+SQL> INSERT INTO EMP1_08 VALUES(1,'SHRUTI','DELHI','2000');
+
+1 row created.
+
+SQL> INSERT INTO EMP1_08 VALUES(2,'ANUJA','PUNE','10000');
+
+1 row created.
+
+SQL> INSERT INTO EMP1_08 VALUES(3,'RADHA','PUNE','10000');
+
+1 row created.
+
+SQL> CREATE TABLE EMP2_08(ID INT ,NAME CHAR(10),CITY CHAR(10),SAL INT);
+
+Table created.
+
+SQL> INSERT INTO EMP2_08 VALUES(4,'RAM','DELHI','2000');
+
+1 row created.
+
+SQL> INSERT INTO EMP2_08 VALUES(5,'RAMESH','PUNE','10000');
+
+1 row created.
+
+SQL> INSERT INTO EMP2_08 VALUES(6,'RAJESH','PUNE','10000');
+
+1 row created.
+
+SQL> SELECT * FROM EMP1_08;
+
+        ID NAME       CITY              SAL                                     
+---------- ---------- ---------- ----------                                     
+         1 SHRUTI     DELHI            2000                                     
+         2 ANUJA      PUNE            10000                                     
+         3 RADHA      PUNE            10000                                     
+
+SQL> SELECT * FROM EMP2_08;
+
+        ID NAME       CITY              SAL                                     
+---------- ---------- ---------- ----------                                     
+         4 RAM        DELHI            2000                                     
+         5 RAMESH     PUNE            10000                                     
+         6 RAJESH     PUNE            10000                                     
+
+SQL> SELECT * FROM EMP1_08 WHERE SAL<SOME(SELECT SAL FROM EMP2_08 WHERE CITY='PUNE');
+
+        ID NAME       CITY              SAL                                     
+---------- ---------- ---------- ----------                                     
+         1 SHRUTI     DELHI            2000                                     
+
+SQL> SELECT * FROM EMP1_08 WHERE SAL<=SOME(SELECT SAL FROM EMP2_08 WHERE CITY='PUNE');
+
+        ID NAME       CITY              SAL                                     
+---------- ---------- ---------- ----------                                     
+         1 SHRUTI     DELHI            2000                                     
+         3 RADHA      PUNE            10000                                     
+         2 ANUJA      PUNE            10000                                     
+
+SQL> SELECT * FROM EMP1_08 WHERE SAL>=SOME(SELECT SAL FROM EMP2_08 WHERE CITY='PUNE');
+
+        ID NAME       CITY              SAL                                     
+---------- ---------- ---------- ----------                                     
+         2 ANUJA      PUNE            10000                                     
+         3 RADHA      PUNE            10000 
+
+SQL> SELECT * FROM EMP1_08 WHERE SAL<ALL(SELECT SAL FROM EMP2_08 WHERE CITY='PUNE');
+
+        ID NAME       CITY              SAL                                     
+---------- ---------- ---------- ----------                                     
+         1 SHRUTI     DELHI            2000                                     
+                                    
+
+SQL> SELECT * FROM EMP1_08 WHERE SAL>=ALL(SELECT SAL FROM EMP2_08 WHERE CITY='PUNE');
+
+        ID NAME       CITY              SAL                                     
+---------- ---------- ---------- ----------                                     
+         3 RADHA      PUNE            10000                                     
+         2 ANUJA      PUNE            10000                                     
+
+SQL> SELECT * FROM EMP1_08 WHERE SAL<=ALL(SELECT SAL FROM EMP2_08 WHERE CITY='PUNE');
+
+        ID NAME       CITY              SAL                                     
+---------- ---------- ---------- ----------                                     
+         2 ANUJA      PUNE            10000                                     
+         3 RADHA      PUNE            10000                                     
+         1 SHRUTI     DELHI            2000                                     
+
+
+SQL> SPOOL OFF;
+
+
+
+

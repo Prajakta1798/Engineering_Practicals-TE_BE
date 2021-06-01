@@ -1,0 +1,153 @@
+Assignment – 10[Group: B]
+-----------------------------------------------------------------------------------------------------------------------
+Title:Execute DDL statements which demonstrate the use of views. Try to update the base table using its corresponding view. Also consider restrictions on updatable views and perform view creation from multiple tables.			
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+------------------------------------------------------------------------------------------------------------------------
+mysql> create database p_08;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use p_08;
+Database changed
+mysql> create table emp(emp_no int primary key,ename varchar(30),job varchar(30),sal int,dep_no int,comm int);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into emp values(1,'samar','clerk',15000,10,null);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into emp values(2,'sam','manager',16000,20,null);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into emp values(3,'john','clerk',15000,30,null);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into emp values(4,'scott','CEO',50000,30,null);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into emp values(5,'stiff','analyst',10000,40,null);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from emp;
++--------+--------+-----------+-------+--------+------+
+| emp_no | ename  | job       | sal   | dep_no | comm |
++--------+--------+-----------+-------+--------+------+
+|      1 | samar  | clerk     | 15000 |     10 | NULL |
+|      2 | sam | manager   | 16000 |     20 | NULL |
+|      3 | john  | clerk     | 15000 |     30 | NULL |
+|      4 | scott | CEO       | 50000 |     30 | NULL |
+|      5 | stiff  | analyst | 10000 |     40 | NULL |
++--------+--------+-----------+-------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> create table dept(dept_no int primary key,dept_name varchar(30),location varchar(30));
+Query OK, 0 rows affected (0.09 sec)
+1
+mysql> insert into dept values(10,'IT','nashik');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into dept values(20,'comp','pune');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into dept values(30,'civil','mumbai');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into dept values(40,'electrical','thane');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into dept values(50,'mechanical','nagar');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from dept;
++---------+------------+----------+
+| dept_no | dept_name  | location |
++---------+------------+----------+
+|      10 | IT         | nashik   |
+|      20 | comp       | pune     |
+|      30 | civil      | mumbai   |
+|      40 | electrical | thane    |
+|      50 | mechanical | nagar    |
++---------+------------+----------+
+5 rows in set (0.01 sec)
+
+mysql> create view emp_08 as select * from emp;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from emp_08;
++--------+--------+-----------+-------+--------+------+
+| emp_no | ename  | job       | sal   | dep_no | comm |
++--------+--------+-----------+-------+--------+------+
+|      1 | samar  | clerk     | 15000 |     10 | NULL |
+|      2 | sam | manager   | 16000 |     20 | NULL |
+|      3 | john  | clerk     | 15000 |     30 | NULL |
+|      4 | scott | CEO       | 50000 |     30 | NULL |
+|      5 | stiff  | analyst | 10000 |     40 | NULL |
++--------+--------+-----------+-------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> create view emp_08 as select * from emp,dept;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> update emp_08 set sal=20000 where ename='samar';  
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp_08;
++--------+--------+-----------+-------+--------+------+
+| emp_no | ename  | job       | sal   | dep_no | comm |
++--------+--------+-----------+-------+--------+------+
+|      1 | samar  | clerk     | 20000 |     10 | NULL |
+|      2 | sam | manager   | 16000 |     20 | NULL |
+|      3 | john  | clerk     | 15000 |     30 | NULL |
+|      4 | scott | CEO       | 50000 |     30 | NULL |
+|      5 | stiff  | analyst | 10000 |     40 | NULL |
++--------+--------+-----------+-------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp
+    -> ;
++--------+--------+-----------+-------+--------+------+
+| emp_no | ename  | job       | sal   | dep_no | comm |
++--------+--------+-----------+-------+--------+------+
+|      1 | samar  | clerk     | 20000 |     10 | NULL |
+|      2 | sam | manager   | 16000 |     20 | NULL |
+|      3 | john  | clerk     | 15000 |     30 | NULL |
+|      4 | scott | CEO       | 50000 |     30 | NULL |
+|      5 | stiff  | analyst | 10000 |     40 | NULL |
++--------+--------+-----------+-------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from dept;
++---------+------------+----------+
+| dept_no | dept_name  | location |
++---------+------------+----------+
+|      10 | IT         | nashik   |
+|      20 | comp       | pune     |
+|      30 | civil      | mumbai   |
+|      40 | electrical | thane    |
+|      50 | mechanical | nagar    |
++---------+------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> create view view1_08 as select emp.emp_no,emp.ename,emp.job,emp.sal,emp.dep_no,emp.comm,dept.dept_name,dept.location from emp,dept where emp.dep_no=dept.dept_no;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from view1_08;
++--------+--------+-----------+-------+--------+------+------------+----------+
+| emp_no | ename  | job       | sal   | dep_no | comm | dept_name  | location |
++--------+--------+-----------+-------+--------+------+------------+----------+
+|      1 | samar  | clerk     | 20000 |     10 | NULL | IT         | nashik   |
+|      2 | sam | manager   | 16000 |     20 | NULL | comp       | pune     |
+|      3 | john  | clerk     | 15000 |     30 | NULL | civil      | mumbai   |
+|      4 | scott | CEO       | 50000 |     30 | NULL | civil      | mumbai   |
+|      5 | stiff  | analyst | 10000 |     40 | NULL | electrical | thane    |
++--------+--------+-----------+-------+--------+------+------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into view1_08 values(6,'anuja','Executive',12000,20,NUll,'comp','pune');
+ERROR 1394 (HY000): Can not insert into join view 's_30.view1_08' without fields list
+
+
+
+

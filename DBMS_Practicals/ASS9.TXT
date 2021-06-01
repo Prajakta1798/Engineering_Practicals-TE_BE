@@ -1,0 +1,139 @@
+Assignment – 9[Group: B]
+-----------------------------------------------------------------------------------------------------------------------
+Title:Write a PL/SQL block to implement all types of cursor.
+
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+------------------------------------------------------------------------------------------------------------------------
+SQL> CREATE TABLE EMP_08 (ID INT PRIMARY KEY ,NAME CHAR(10),JOININGDATE DATE,SAL INT);
+
+Table created.
+
+SQL> DESC EMP_08;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(38)
+ NAME                                               CHAR(10)
+ JOININGDATE                                        DATE
+ SAL                                                NUMBER(38)
+
+SQL> INSERT INTO EMP_08 VALUES(100,'RAM','12-AUG-98',5000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(200,'RAJESH','13-NOV-96',7000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(300,'SHAM','23-NOV-98',10000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(400,'SHARAD','25-JULY-97',2000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(500,'SHAKIT','12-JUN-98',15000);
+
+1 row created.
+
+
+
+
+SQL> SELECT * FROM EMP_08;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+       500 SHAKIT     12-JUN-98      15000                                      
+
+
+
+SQL> DECLARE
+  2  CURSOR C08 IS SELECT ID,NAME,SAL FROM EMP_08;
+  3  VID EMP_08.ID %TYPE;
+  4  VNAME EMP_08.NAME %TYPE;
+  5  VSAL EMP_08.SAL %TYPE;
+  6  BEGIN
+  7  OPEN C08;
+  8  LOOP
+  9  FETCH C08 INTO VID,VNAME,VSAL;
+ 10  EXIT WHEN C08 %NOTFOUND;
+ 11  DBMS_OUTPUT.PUT_LINE(VID||''||VNAME||''||VSAL);
+ 12  END LOOP;
+ 13  CLOSE C08;
+ 14  END;
+ 15  /
+100RAM       5000                                                               
+200RAJESH    5000                                                               
+300SHAM      10000                                                              
+400SHARAD    2000                                                               
+500SHAKIT    15000                                                              
+
+PL/SQL procedure successfully completed.
+
+
+
+
+
+SQL> DECLARE
+  2  CURSOR C1_08 IS SELECT * FROM EMP_08;
+  3  I EMP_08%ROWTYPE;
+  4  BEGIN
+  5  OPEN C1_08;
+  6  IF C1_08 %ISOPEN
+  7  THEN
+  8  DBMS_OUTPUT.PUT_LINE('CURSOR IS OPEN');
+  9  LOOP
+ 10  FETCH C1_08 INTO I;
+ 11  EXIT WHEN C1_08%NOTFOUND;
+ 12  DBMS_OUTPUT.PUT_LINE('CURSOR IS CLOSE');
+ 13  END LOOP;
+ 14  END IF;
+ 15  END;
+ 16  /
+CURSOR IS OPEN                                                                  
+CURSOR IS CLOSE                                                                 
+CURSOR IS CLOSE                                                                 
+CURSOR IS CLOSE                                                                 
+CURSOR IS CLOSE                                                                 
+CURSOR IS CLOSE                                                                 
+
+PL/SQL procedure successfully completed.
+
+
+SQL> DECLARE
+  2  CURSOR C2_08 IS SELECT NAME,SAL FROM EMP_08;
+  3  VNAME CHAR(10);
+  4  VSAL NUMBER(5);
+  5  BEGIN
+  6  OPEN C2_08;
+  7  FETCH C2_08 INTO VNAME ,VSAL;
+  8  DBMS_OUTPUT.PUT_LINE(VNAME||','||VSAL);
+  9  CLOSE C2_08;
+ 10  END;
+ 11  /
+RAM       ,5000                                                                 
+
+PL/SQL procedure successfully completed.
+----------------------------------------------------------------------------------------------------------------------------------------
+IMPLICIT CURSOR
+
+
+SQL> DECLARE
+  2  X EMP_08%ROWTYPE;
+  3  BEGIN
+  4  SELECT * INTO X FROM EMP_08 WHERE ID=300;
+  5  DBMS_OUTPUT.PUT_LINE(X.NAME||','||X.SAL);
+  6  END;
+  7  /
+SHAM      ,10000                                                                
+
+PL/SQL procedure successfully completed.
+
+SQL> SPOOL OFF;

@@ -1,0 +1,68 @@
+Assignment – 2[Group: C]
+---------------------------------------------------------------------------------------------------------------------------------------------
+Title:Execute at least 10 queries on any suitable MongoDB database that demonstrates following querying techniques:
+·find and findOne (specific values)
+·Query criteria (Query conditionals, OR queries, $not, Conditional semantics)
+·Type-specific queries (Null, Regular expressi
+on, Querying arrays)		
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+> USE TEST
+switched to db test
+
+> db.createCollection("STUD_08")
+{ "ok" : 1 }
+
+> db.STUD_08.insert({'NAME':'JOHN','ID':1,'BRANCH':'IT','CLASS':'TE','MARKS':56});
+WrITEResult({ "ninsertEd" : 1 })
+> db.STUD_08.insert({'NAME':'SAM','ID':2,'BRANCH':'IT','CLASS':'TE','MARKS':45});
+WrITEResult({ "ninsertEd" : 1 })
+> db.STUD_08.insert({'NAME':'SAMAR','ID':3,'BRANCH':'IT','CLASS':'TE','MARKS':45});
+WrITEResult({ "ninsertEd" : 1 })
+> db.STUD_08.insert({'NAME':'SCOTT','ID':4,'BRANCH':'IT','CLASS':'TE','MARKS':730});
+WrITEResult({ "ninsertEd" : 1 })
+> db.STUD_08.insert({'NAME':'STIFF','ID':5,'BRANCH':'IT','CLASS':'TE','MARKS':930});
+WrITEResult({ "ninsertEd" : 1 })
+
+> db.STUD_08.find()
+{ "_ID" : ObjectID("5bbacd427aa3035233e200405"), "NAME" : "JOHN", "ID" : 1, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 56 }
+{ "_ID" : ObjectID("5bbacd5b7aa3035233e200406"), "NAME" : "SAM", "ID" : 2, 
+"BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+{ "_ID" : ObjectID("5bbacd637aa3035233e200407"), "NAME" : "SAMAR", "ID" : 3, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+{ "_ID" : ObjectID("5bbacd3067aa3035233e2004030"), "NAME" : "SCOTT", "ID" : 4, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 730 }
+{ "_ID" : ObjectID("5bbacd9c7aa3035233e200409"), "NAME" : "STIFF", "ID" : 5, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 930 }
+
+> db.STUD_08.findOne()
+{
+	"_ID" : ObjectID("5bbacc527aa3035233e200402"),
+	"NAME" : "JOHN",
+	"ID" : 1,
+	"BRANCH" : "IT",
+	"CLASS" : "TE",
+                   "MARKS" : 56 
+}
+
+> db.STUD_08.find( { $OR: [ { QUANTITY: { $LT: 50 } }, { MARKS:45}]});
+{ "_ID" : ObjectID("5bbacd5b7aa3035233e200406"), "NAME" : "SAM", "ID" : 2, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+{ "_ID" : ObjectID("5bbacd637aa3035233e200407"), "NAME" : "SAMAR", "ID" : 3, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+
+> db.STUD_08.find( { MARKS: { $NOT: { $GT: 45} } } )
+{ "_ID" : ObjectID("5bbacd5b7aa3035233e200406"), "NAME" : "SAM", "ID" : 2, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+{ "_ID" : ObjectID("5bbacd637aa3035233e200407"), "NAME" : "SAMAR", "ID" : 3, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+
+> db.STUD_08.find( { $AND: [ { MARKS: { $NE: 45 } }, { MARKS: { $EXISTS: TRUE } } ] } )
+{ "_ID" : ObjectID("5bbacd427aa3035233e200405"), "NAME" : "JOHN", "ID" : 1, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 56 }
+{ "_ID" : ObjectID("5bbacd3067aa3035233e2004030"), "NAME" : "SCOTT", "ID" : 4, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 730 }
+{ "_ID" : ObjectID("5bbacd9c7aa3035233e200409"), "NAME" : "STIFF", "ID" : 5, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 930 }
+
+> db.STUD_08.insert({NAME:NULL,ID:9,BRANCH:"CIVIL",MARKS:300});
+WrITEResult({ "ninsertEd" : 1 })
+
+
+
+
+	

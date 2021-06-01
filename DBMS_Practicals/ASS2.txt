@@ -1,0 +1,34 @@
+Assignment-2[Group-A]
+---------------------------------------------------------------------------------------------------------------------------------------------
+Title:
+Study the SQLite database and ints uses. Also elaborate on building and installation of SQLite.
+Batch: T1
+Name: Chandwakar Prajakta Suhas
+Rollno: 08
+Subject: DBMS
+---------------------------------------------------------------------------------------------------------------------------------------------
+Steps:
+
+Press “Ctrl-Alt-T” to open a terminal window in Ubuntu. 2. 
+Type "sudo apt-get install sqlite3 libsqlite3-dev" (omit the quotes here and throughout) 
+to install SQLite and its development files. The sudo command allows SQLite3 to install with the necessary root level permissions.
+
+How to Install SQLite 3.8.2 on Ubuntu 14.04 and commands for creating database and tables
+
+Installation steps:
+1. type in the following command –
+    sudo apt-get install sqlite3 libsqlite3-dev
+2. After installation check installation, sqlite terminal will give you a prompt and        version info –
+    naved@neo:~$ sqlite3
+    SQLite version 3.8.2 2013-12-06 14:53:30  
+    Enter &quot;.help&quot; for instructions
+    Enter SQL statements terminated with a &quot;;&quot;
+    sqlite&gt;
+3. To quit –
+    sqlite&gt; .quit
+4. Go to desired folder and create database –
+    naved@neo:~$ sqlite3 database_name.db
+    It’ll create database_name.db in the folder you’ve given the command.
+5. To check whether the database has been created give the following command     in sqlite3 terminal –
+   sqlite&gt; .databases
+ 

@@ -1,0 +1,136 @@
+Assignment – 7[Group: B]
+-----------------------------------------------------------------------------------------------------------------------
+Title:Write and execute suitable database triggers. Consider row level and statement level triggers
+
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+------------------------------------------------------------------------------------------------------------------------
+
+SQL> CREATE TABLE EMP_08(ID INT,ENAME CHAR(10),SAL INT,LOC CHAR(10),AGE INT);
+
+Table created.
+
+SQL> INSERT INTO EMP_08 VALUES(1,'RAM',3000,'NASHIK',21);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(2,'SHAM',4300,'OZAR',21);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(3,'RAJESH','5000','NASHIK',20);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(4,'JAYESH','45000','NASHIK',25);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(5,'JAY','3000','NASHIK',25);
+
+1 row created.
+
+SQL> SELECT * FROM EMP_08;
+
+        ID ENAME             SAL           LOC               AGE                          
+---------- ----------          ----------      ----------         ----------                          
+         1 RAM                3000            NASHIK             21                          
+         2 SHAM              4300           OZAR                 21                          
+         3 RAJESH          5000           NASHIK             20                          
+         4 JAYESH          45000         NASHIK             25                          
+         5 JAY                   3000            NASHIK             25                          
+
+SQL> CREATE OR REPLACE TRIGGER E_08 BEFORE INSERT OR UPDATE OR DELETE ON EMP_08
+  2  BEGIN
+  3  IF TO_CHAR(SYSDATE,'DY')IN('FRI','SAT','SUN')
+  4  THEN
+  5  RAISE_APPLICATION_ERROR(-20123,'CANNOT PERFORM INSERT ,UPDATE,DELETE');
+  6  END IF;
+  7  END;
+  8  /
+
+Trigger created.
+
+SQL> INSERT INTO EMP_08 VALUES(6,'SEETA',7000,'OZAR',23);
+INSERT INTO EMP_08 VALUES(6,'SEETA',7000,'OZAR',23)
+            *
+ERROR at line 1:
+ORA-20123: CANNOT PERFORM INSERT ,UPDATE,DELETE 
+ORA-06512: at "SCOTT.E_08", line 4 
+ORA-04088: error during execution of trigger 'SCOTT.E_08' 
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+SQL> CREATE TABLE EMP1_08(ID INT,ENAME CHAR(10),SAL INT,LOC CHAR(10));
+
+Table created.
+
+SQL> INSERT INTO EMP1_08 VALUES(1,'RAM',7000,'OZAR');
+
+1 row created.
+
+SQL> INSERT INTO EMP1_08 VALUES(2,'RAMESH',5000,'OZAR');
+
+1 row created.
+
+SQL> INSERT INTO EMP1_08 VALUES(3,'RAJESH',4000,'NASHIK');
+
+1 row created.
+
+SQL> INSERT INTO EMP1_08 VALUES(4,'SATISH',6000,'NASHIK');
+
+1 row created.
+
+SQL> INSERT INTO EMP1_08 VALUES(5,'SAMAR',5000,'NASHIK');
+
+1 row created.
+
+SQL> SELECT * FROM EMP1_08;
+
+        ID ENAME          SAL       LOC                                            
+---------- ----------      ----------    ----------                                     
+         1 RAM              7000         OZAR                                           
+         2 RAMESH      5000        OZAR                                           
+         3 RAJESH        4000        NASHIK                                         
+         4 SATISH          6000        NASHIK                                         
+         5 SAMAR          5000        NASHIK                                         
+
+SQL> CREATE OR REPLACE TRIGGER E1_08 BEFORE INSERT OR UPDATE OR DELETE ON EMP1_08
+  2  FOR EACH ROW
+  3  BEGIN
+  4  IF:NEW.SAL<5000 THEN
+  5  RAISE_APPLICATION_ERROR(-20123,'SALARY SHOULD BE MORE THAN 5000');
+  6  END IF;
+  7  END;
+  8  /
+
+Trigger created.
+
+SQL> INSERT INTO EMP1_08 VALUES(6,'SAM',4000,'NASHIK');
+INSERT INTO EMP1_08 VALUES(6,'SAM',4000,'NASHIK')
+            *
+ERROR at line 1:
+ORA-20123: SALARY SHOULD BE MORE THAN 5000 
+ORA-06512: at "SCOTT.E1_08", line 3 
+ORA-04088: error during execution of trigger 'SCOTT.E1_08' 
+
+
+SQL> INSERT INTO EMP1_08 VALUES(6,'SAM',7000,'NASHIK');
+
+1 row created.
+
+SQL> SELECT * FROM EMP1_08;
+
+        ID ENAME             SAL LOC                                            
+---------- ---------- ----------        ----------                                     
+         1 RAM              7000      OZAR                                           
+         2 RAMESH      5000      OZAR                                           
+         3 RAJESH        4000    NASHIK                                         
+         4 SATISH          6000    NASHIK                                         
+         5 SAMAR          5000    NASHIK                                         
+         6 SAM                7000    NASHIK                                         
+
+6 rows selected.
+
+SQL> SPOOL OFF;

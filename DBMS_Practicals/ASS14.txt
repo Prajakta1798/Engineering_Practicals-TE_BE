@@ -1,0 +1,100 @@
+Assignment – 14[Group: C]
+-----------------------------------------------------------------------------------------------------------------------
+Title:Implement Map reduce example with suitable example.
+
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+------------------------------------------------------------------------------------------------------------------------
+> USE P_08
+switched to db P_08 
+
+> DB.CREATECOLLECTION("STUDENT_08"); 
+{ "ok" : 1 } 
+
+> DB.STUDENT_08.INSERT({NAME:"REEMA",ADDR:"NASHIK",ROLL_NO:1,MARKS:75}); 
+> DB.STUDENT_08.INSERT({NAME:"REEMA",ADDR:"PUNE",ROLL_NO:2,MARKS:85}); 
+> DB.STUDENT_08.INSER({NAME:"REEMA",ADDR:"MUMBAI",ROLL_NO:3,MARKS:65}); 
+> DB.STUDENT_08.INSERT({NAME:"RAM",ADDR:"SOLAPUR",ROLL_NO:4,MARKS:95}); 
+> DB.STUDENT_08.INSERT({NAME:"RAM",ADDR:"NAGPUR",ROLL_NO:5,MARKS:98}); 
+> DB.STUDENT_08.INSERT({NAME:"RAM",ADDR:"NASHIK",ROLL_NO:6,MARKS:68}); 
+> DB.STUDENT_08.INSERT({NAME:"SITA",ADDR:"MUMBAI",ROLL_NO:7,MARKS:78}); 
+> DB.STUDENT_08.INSERT({NAME:"SITA",ADDR:"PUNE",ROLL_NO:8,MARKS:68}); 
+> DB.STUDENT_08.FIND().PRETTY(); 
+{ 
+	"_id" : ObjectId("5bbac4e524040b37e9db959b"), 
+	"NAME" : "REEMA", 
+	"ADDR" : "nashik", 
+	"ROLL_NO" : 1, 
+	"MARKS" : 75 
+} 
+{ 
+	"_id" : ObjectId("5bbac4fd24040b37e9db959c"), 
+	"NAME" : "REEMA", 
+	"ADDR" : "pune", 
+	"ROLL_NO" : 2, 
+	"MARKS" : 85 
+} 
+{ 
+	"_id" : ObjectId("5bbac50f24040b37e9db959d"), 
+	"NAME" : "REEMA", 
+	"ADDR" : "mumbai", 
+	"ROLL_NO" : 3, 
+	"MARKS" : 65 
+} 
+{ 
+	"_id" : ObjectId("5bbac52824040b37e9db959e"), 
+	"NAME" : "RAM", 
+	"ADDR" : "solapur", 
+	"ROLL_NO" : 4, 
+	"MARKS" : 95 
+} 
+{ 
+	"_id" : ObjectId("5bbac53a24040b37e9db959f"), 
+	"NAME" : "RAM", 
+	"ADDR" : "nagpur", 
+	"ROLL_NO" : 5, 
+	"MARKS" : 98 
+} 
+{ 
+	"_id" : ObjectId("5bbac55624040b37e9db95a0"), 
+	"NAME" : "RAM", 
+	"ADDR" : "nashik", 
+	"ROLL_NO" : 6, 
+	"MARKS" : 68 
+} 
+{ 
+	"_id" : ObjectId("5bbac56d24040b37e9db95a1"), 
+	"NAME" : "SITA", 
+	"ADDR" : "mumbai", 
+	"ROLL_NO" : 7, 
+	"MARKS" : 78 
+} 
+{ 
+	"_id" : ObjectId("5bbac57c24040b37e9db95a2"), 
+	"NAME" : "SITA", 
+	"ADDR" : "pune", 
+	"ROLL_NO" : 8, 
+	"MARKS" : 68 
+} 
+
+> VAR MAP=FUNCTION(){EMIT(THIS.NAME,THIS.MARKS);}; 
+> VAR REDUCE=FUNCTION(NAME,MARKS){RETURN ARRAY.SUM(MARKS)} 
+> DB.STUDENT_08.MAPREDUCE(MAP,REDUCE,{OUT:"TOTALS"}); 
+{ 
+	"result" : "totals", 
+	"timeMillis" : 32, 
+	"counts" : { 
+		"input" : 8, 
+		"emit" : 8, 
+		"reduce" : 3, 
+		"output" : 3 
+	}, 
+	"ok" : 1, 
+} 
+> DB.TOTALS.FIND({}) 
+{ "_id" : "SITA", "value" : 146 } 
+{ "_id" : "RAM", "value" : 261 } 
+{ "_id" : "REEMA", "value" : 225 } 
+> 

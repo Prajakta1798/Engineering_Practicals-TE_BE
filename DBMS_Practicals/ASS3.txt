@@ -1,0 +1,297 @@
+Assignment – 3[Group: B]
+-----------------------------------------------------------------------------------------------------------------------
+Title:Design any database with at least 3 entities and relationships between them. Apply DCL and DDL 
+commands. Draw suitable ER/EER diagram for the system.	
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+------------------------------------------------------------------------------------------------------------------------
+
+SQL> CREATE TABLE STUD_08(ROLLNO INT PRIMARY KEY ,SNAME CHAR(10),DEPTNO INT);
+
+Table created.
+
+SQL> DESC STUD_08;
+ Name                         Null?    Type
+ -------------------       -------- ----------------------------
+ ROLLNO                                NUMBER(38)
+ SNAME                                      CHAR(10)
+ DEPTNO                                  NUMBER(38)
+
+SQL> INSERT INTO STUD_08 VALUES(1,'RAM',101);
+
+1 row created.
+
+SQL> INSERT INTO STUD_08 VALUES(2,'SHARAD',102);
+
+1 row created.
+
+SQL> INSERT INTO STUD_08 VALUES(3,'RAJESH',103);
+
+1 row created.
+
+SQL> SELECT * FROM STUD_08;
+
+    ROLLNO       SNAME          DEPTNO                                                
+     ----------            ----------          ----------                                                
+         1                    RAM               101                                                
+         2                SHARAD            102                                                
+         3                 RAJESH            103                                                
+
+SQL> CREATE TABLE T_08(ID INT PRIMARY KEY ,TNAME CHAR(5),DEPTNO INT);
+
+Table created.
+
+SQL> DESC T_08;
+ Name                          Null?              Type
+ ----------------------- --------      ----------------------------
+ ID                                                           NUMBER(38)
+ TNAME                                                CHAR(5)
+ DEPTNO                                             NUMBER(38)
+
+SQL> INSERT INTO T_08 VALUES(201,'PATIL',101);
+
+1 row created.
+
+SQL> INSERT INTO T_08 VALUES(202,'SABAL',102);
+
+1 row created.
+
+SQL> INSERT INTO T_08 VALUES(203,'BHAT',103);
+
+1 row created.
+
+SQL> SELECT * FROM T_08;
+
+        ID   TNAME     DEPTNO                                                     
+----------    -----            ----------                                                     
+       201    PATIL        101                                                     
+       202   SABAL        102                                                     
+       203    BHAT         103                                                     
+
+SQL> CREATE TABLE D_08(DEPTNO INT PRIMARY KEY ,DNAME CHAR(10),DHOD CHAR(10));
+
+Table created.
+
+SQL> DESC D_08;
+ Name                    Null?         Type
+ ------------------   -------- ----------------------------
+ DEPTNO                                NUMBER(38)
+ DNAME                                       CHAR(10)
+ DHOD                                           CHAR(10)
+
+SQL> INSERT INTO D_08 VALUES(101,'IT','BHALE SIR');
+
+1 row created.
+
+SQL> INSERT INTO D_08 VALUES(102,'COMP','PATIL SIR');
+
+1 row created.
+
+SQL> INSERT INTO D_08 VALUES(103,'ENTC','UGALE SIR');
+
+1 row created.
+
+SQL> SELECT * FROM D_08;
+
+    DEPTNO     DNAME      DHOD                                                      
+----------           ----------         ----------                                                
+       101            IT            BHALE SIR                                                 
+       102         COMP       PATIL SIR                                                 
+       103          ENTC       UGALE SIR                                                 
+
+SQL> ALTER TABLE STUD_08 ADD CONTACTNO NUMBER(10);
+
+Table altered.
+
+SQL> SELECT * FROM STUD_08;
+
+    ROLLNO    SNAME        DEPTNO  CONTACTNO                                     
+----------            ----------          ----------       ----------                                     
+         1             RAM                   101                                                
+         2             SHARAD           102                                                
+         3            RAJESH             103                                                
+
+SQL> ALTER TABLE T_08 ADD JOININGDATE DATE;
+
+Table altered.
+
+SQL> SELECT * FROM T_08;
+
+        ID TNAME     DEPTNO JOININGDA                                           
+---------- ----- ---------- ---------                                           
+       201 PATIL        101                                                     
+       202 SABAL      102                                                     
+       203 BHAT         103                                                     
+
+SQL> ALTER TABLE D_08 ADD INTAKE NUMBER(20);
+
+Table altered.
+
+SQL> SELECT * FROM D_08;
+
+    DEPTNO        DNAME      DHOD           INTAKE                                     
+---------- ---------- ---------- ----------                                     
+       101                 IT         BHALE SIR                                                 
+       102            COMP       PATIL SIR                                                 
+       103            ENTC       UGALE SIR                                                 
+
+
+SQL> ALTER TABLE STUD_08 RENAME COLUMN ROLLNO TO NO;
+
+Table altered.
+
+SQL> SELECT * FROM STUD_08;
+
+        NO     SNAME          DEPTNO  CONTACTNO                                     
+----------      ----------           ----------     ----------                                     
+         1        RAM               101                                                
+         2     SHARAD           102                                                
+         3     RAJESH            103                                                
+
+SQL> ALTER TABLE D_08 RENAME COLUMN DNAME TO DEPTNAME;
+
+Table altered.
+
+SQL> SELECT * FROM D_08;
+
+    DEPTNO   DEPTNAME   DHOD           INTAKE                                     
+----------          ----------              ----------          ----------                                     
+       101	 IT                           BHALE SIR                                                 
+       102 	COMP                    PATIL SIR                                                 
+       103 	ENTC                    UGALE SIR                                                 
+
+SQL> ALTER TABLE T_08 RENAME COLUMN JOININGDATE TO JDATE ;
+
+Table altered.
+
+SQL> SELECT * FROM T_08;
+
+        ID TNAME     DEPTNO JDATE                                               
+---------- ----- ---------- ---------                                           
+       201 PATIL        101                                                     
+       202 SABAL        102                                                     
+       203 BHAT         103                                                     
+
+SQL> ALTER TABLE STUD_08  DROP COLUMN CONTACTNO;
+
+Table altered.
+
+SQL> SELECT * FROM STUD_08;
+
+        NO SNAME          DEPTNO                                                
+---------- ---------- ----------                                                
+         1 RAM               101                                                
+         2 SHARAD            102                                                
+         3 RAJESH            103                                                
+
+SQL> ALTER TABLE T_08 DROP COLUMN JDATE;
+
+Table altered.
+
+SQL> SELECT * FROM T_08;
+
+        ID TNAME     DEPTNO                                                     
+---------- ----- ----------                                                     
+       201 PATIL        101                                                     
+       202 SABAL        102                                                     
+       203 BHAT         103                                                     
+
+SQL> ALTER TABLE D_08 DROP COLUMN INTAKE;
+
+Table altered.
+
+SQL> SELECT * FROM D_08;
+
+    DEPTNO DEPTNAME   DHOD                                                      
+---------- ---------- ----------                                                
+       101 IT         BHALE SIR                                                 
+       102 COMP       PATIL SIR                                                 
+       103 ENTC       UGALE SIR                                                 
+
+SQL> RENAME STUD_08 TO S_08;
+
+Table renamed.
+
+SQL> SELECT * FROM S_08;
+
+        NO SNAME          DEPTNO                                                
+---------- ---------- ----------                                                
+         1 RAM               101                                                
+         2 SHARAD            102                                                
+         3 RAJESH            103                                                
+
+SQL> CREATE TABLE DT_08(NO INT NOT NULL,DEPTNO INT NOT NULL,CONSTRAINT FK_TR FOREIGN KEY (DEPTNO) REFERENCES T_08(DEPTNO));                                                                              
+Table created.
+
+SQL> SELECT * FROM DT_08;
+
+no rows selected
+
+SQL> INSERT INTO DT_08VALUES(1 , 10);
+
+1 row created.
+
+SQL> INSERT INTO DT_08 VALUES(2 , 20);
+
+1 row created.
+
+SQL> INSERT INTO DT_08 VALUES(3 , 30);
+
+1 row created.
+
+SQL> SELECT * FROM DT_08;
+
+    NO     DEPTNO                                                           
+---------- ----------                                                           
+         1         10                                                           
+         2         20                                                           
+         3         30                                                           
+
+SQL> 
+
+
+mysql> CREATE DATABASE P_08;
+Query OK, 1 row affected (0.00 sec)
+	
+mysql> USE P_08;
+Database changed
+
+mysql> CREATE TABLE EMP_08(EMP_NO INT PRIMARY KEY,ENAME VARCHAR(30),JOB VARCHAR(30),SAL INT,DEP_NO INT,COMM INT);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO EMP_08 VALUES(1,'STIFF','CLERK',15000,10,NULL);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO EMP_08 VALUES(2,'SCOTT','MANAGER',16000,20,NULL);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO EMP_08 VALUES(3,'JOHN','CLERK',15000,30,NULL);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO EMP_08 VALUES(4,'SAM','CEO',50000,30,NULL);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO EMP_08 VALUES(5,'SAMAR','ASSISTANT',10000,40,NULL);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM EMP_08;
++--------+--------+-----------+-------+--------+------+
+| EMP_NO | ENAME  | JOB       | SAL   | DEP_NO | COMM |
++--------+--------+-----------+-------+--------+------+
+|      1 | STIFF  | CLERK     | 15000 |     10 | NULL |
+|      2 | SCOTT | MANAGER   | 16000 |     20 | NULL |
+|      3 | JOHN  | CLERK     | 15000 |     30 | NULL |
+|      4 | SAM | CEO       | 50000 |     40 | NULL |
+|      5 | SAMAR  | ASSISTANT | 10000 |     50 | NULL |
++--------+--------+-----------+-------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> GRANT SELECT,UPDATE ON EMP_08 TO  SCOTT;
+Query OK,1 row affected(0.03 sec)
+
+mysql>REVOKE SELECT,UPDATE ON EMP_08 TO SCOTT;
+Query OK,1 row affected(0.01 sec)
+ 
+mysql> 

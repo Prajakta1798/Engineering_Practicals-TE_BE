@@ -1,0 +1,152 @@
+Assignment – 5[Group: B]
+-----------------------------------------------------------------------------------------------------------------------
+Title:Execute the aggregate functions like count, sum, avg etc. on the suitable database. Make use of built in functions according to the need of the database chosen. Retrieve the data from the database based on time and date functions like now(), date(), day(), time() etc. Use group by and having clauses. 
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+------------------------------------------------------------------------------------------------------------------------
+SQL> CREATE TABLE EMP_08 (ID INT PRIMARY KEY ,NAME CHAR(10),JOININGDATE DATE,SAL INT);
+
+Table created.
+
+SQL> DESC EMP_08;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(38)
+ NAME                                               CHAR(10)
+ JOININGDATE                                        DATE
+ SAL                                                NUMBER(38)
+
+SQL> INSERT INTO EMP_08 VALUES(100,'RAM','12-AUG-98',5000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(200,'RAJESH','13-NOV-96',5000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(300,'SHAM','23-NOV-98',10000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(400,'SHARAD','25-JULY-97',2000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(500,'SHAKIT','12-JUN-98',15000);
+
+1 row created.
+
+
+
+SQL> SELECT * FROM EMP_08;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+       500 SHAKIT     12-JUN-98      15000                                      
+
+SQL> SELECT COUNT(ID) FROM EMP_08;
+
+ COUNT(ID)                                                                      
+----------                                                                      
+         5                                                                      
+
+SQL> SELECT COUNT(ID) FROM EMP_08 WHERE SAL=5000;
+
+ COUNT(ID)                                                                      
+----------                                                                      
+         2                                                                      
+
+SQL> SELECT SUM(SAL) FROM EMP_08;
+
+  SUM(SAL)                                                                      
+----------                                                                      
+     37000                                                                      
+
+SQL> SELECT COUNT(*) FROM EMP_08;
+
+  COUNT(*)                                                                      
+----------                                                                      
+         5                                                                      
+
+SQL> SELECT AVG(SAL) FROM EMP_08;
+
+  AVG(SAL)                                                                      
+----------                                                                      
+      7400                                                                      
+
+SQL> SELECT MIN(SAL) FROM EMP_08;
+
+  MIN(SAL)                                                                      
+----------                                                                      
+      2000                                                                      
+
+SQL> SELECT MAX(SAL) FROM EMP_08;
+
+  MAX(SAL)                                                                      
+----------                                                                      
+     15000                                                                      
+
+SQL> SELECT NAME, SUM(SAL) FROM EMP_08 GROUP BY NAME;
+
+NAME         SUM(SAL)                                                           
+---------- ----------                                                           
+RAM              5000                                                           
+SHARAD           2000                                                           
+SHAKIT          15000                                                           
+SHAM            10000                                                           
+RAJESH           5000                                                           
+
+SQL> SELECT NAME, SUM(SAL) FROM EMP_08 GROUP BY NAME HAVING AVG(SAL)>5000 ORDER BY NAME;
+
+NAME         SUM(SAL)                                                           
+---------- ----------                                                           
+SHAKIT          15000                                                           
+SHAM            10000                                                           
+
+SQL> SELECT ADD_MONTHS(SYSDATE,3)"ADD_MONTHS"FROM DUAL;
+
+ADD_MONTH                                                                       
+---------                                                                       
+06-JAN-19                                                                       
+
+SQL> SELECT SYSDATE,LAST_DAY(SYSDATE)"LAST _DATE"FROM DUAL;
+
+SYSDATE   LAST _DAT                                                             
+--------- ---------                                                             
+06-OCT-18 31-OCT-18                                                             
+
+SQL> SELECT MONTHS_BETWEEN('01-JULY-98,'01-JUN-98')"MONTHS" FROM DUAL;
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> SELECT MONTHS_BETWEEN('01-JULY-98,'01-JUN-98')"MONTHS"FROM DUAL;
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> SELECT MONTHS_BETWEEN('01-JULY-98','01-JUN-98')"MONTHS"FROM DUAL;
+
+    MONTHS                                                                      
+----------                                                                      
+         1                                                                      
+
+SQL> SELECT MONTHS_BETWEEN('01-JULY-98','01-MARCH-98')"MONTHS"FROM DUAL;
+
+    MONTHS                                                                      
+----------                                                                      
+         4                                                                      
+
+SQL> SELECT NEXT_DAY('01-JULY-98','MONDAY')"NEXT_DAY"FROM DUAL;
+
+NEXT_DAY                                                                        
+---------                                                                       
+06-JUL-98                                                                       
+
+SQL> SPOOL OFF;

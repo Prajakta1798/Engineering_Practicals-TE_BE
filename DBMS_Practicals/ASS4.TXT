@@ -1,0 +1,132 @@
+-------------------------------------------------------------------------------------------------------------------------------
+SQL> CREATE TABLE EMP_08 (ID INT PRIMARY KEY ,NAME CHAR(10),JOININGDATE DATE,SAL INT);
+
+Table created.
+
+SQL> DESC EMP_08;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(38)
+ NAME                                               CHAR(10)
+ JOININGDATE                                        DATE
+ SAL                                                NUMBER(38)
+
+SQL> INSERT INTO EMP_08 VALUES(100,'RAM','12-AUG-98',5000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(200,'RAJESH','13-NOV-96',7000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(300,'SHAM','23-NOV-98',10000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(400,'SHARAD','25-JULY-97',2000);
+
+1 row created.
+
+SQL> INSERT INTO EMP_08 VALUES(500,'SHAKIT','12-JUN-98',15000);
+
+1 row created.
+
+SQL> SELECT * FROM EMP_08;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       7000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+       500 SHAKIT     12-JUN-98      15000                                      
+
+SQL> DELETE FROM EMP_08 WHERE ID=500;
+
+1 row deleted.
+
+SQL> SELECT * FROM EMP_08;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+
+SQL> SELECT  * FROM EMP_08 WHERE SAL>2000;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       300 SHAM       23-NOV-98      10000                                      
+
+SQL> SELECT  DISTINCT(SAL) FROM EMP_08;
+
+       SAL                                                                      
+----------                                                                      
+      5000                                                                      
+     10000                                                                      
+      2000                                                                      
+
+SQL> SELECT  * FROM EMP_08 ORDER BY NAME;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       200 RAJESH     13-NOV-96       5000                                      
+       100 RAM        12-AUG-98       5000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+
+SQL> SELECT  * FROM EMP_08 ORDER BY NAME DESC;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       400 SHARAD     25-JUL-97       2000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       5000                                      
+
+SQL> UPDATE EMP_08 SET SAL=7000 WHERE ID=200;
+
+1 row updated.
+
+SQL> SELECT  * FROM EMP_08 ;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       7000                                      
+       300 SHAM       23-NOV-98      10000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+
+SQL> SELECT  * FROM EMP_08 WHERE SAL  BETWEEN 2000 AND 7000;
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       200 RAJESH     13-NOV-96       7000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+
+SQL> SELECT  * FROM EMP_08 WHERE ID IN ('100','400');
+
+        ID NAME       JOININGDA        SAL                                      
+---------- ---------- --------- ----------                                      
+       100 RAM        12-AUG-98       5000                                      
+       400 SHARAD     25-JUL-97       2000                                      
+
+SQL> SELECT  NAME FROM EMP_08 WHERE NAME LIKE'S%';
+
+NAME                                                                            
+----------                                                                      
+SHAM                                                                            
+SHARAD                                                                          
+
+SQL> SELECT  NAME FROM EMP_08 WHERE NAME NOT LIKE'S%';
+
+NAME                                                                            
+----------                                                                      
+RAM                                                                             
+RAJESH                                                                          
+

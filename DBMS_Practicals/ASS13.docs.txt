@@ -1,0 +1,72 @@
+Assignment – 13[Group: C]
+-----------------------------------------------------------------------------------------------------------------------
+Title:Execute at least 10 queries on any suitable MongoDB database that demonstrates following:
+·$ where queries
+·Cursors (Limits, skips, sorts, advanced query options)
+·Database commands
+Subject: DBMS
+Batch: T1
+Name:Chandwadkar Prajakta Suhas
+Roll no: 08 
+------------------------------------------------------------------------------------------------------------------------
+> USE TEST
+switched to db test
+
+> DB.CREATECOLLECTION("STUD_08")
+{ "ok" : 1 }
+
+> DB.STUD_08.insert({'NAME':'JOHN','ID':1,'BRANCH':'IT','CLASS':'TE','MARKS':56});
+WrITEResult({ "ninsertEd" : 1 })
+> DB.STUD_08.insert({'NAME':'SAM','ID':2,'BRANCH':'IT','CLASS':'TE','MARKS':45});
+WrITEResult({ "ninsertEd" : 1 })
+> DB.STUD_08.insert({'NAME':'SAMAR','ID':3,'BRANCH':'IT','CLASS':'TE','MARKS':45});
+WrITEResult({ "ninsertEd" : 1 })
+> DB.STUD_08.insert({'NAME':'SCOTT','ID':4,'BRANCH':'IT','CLASS':'TE','MARKS':730});
+WrITEResult({ "ninsertEd" : 1 })
+> DB.STUD_08.insert({'NAME':'STIFF','ID':5,'BRANCH':'IT','CLASS':'TE','MARKS':930});
+WrITEResult({ "ninsertEd" : 1 })
+
+> DB.STUD_08.FIND()
+{ "_ID" : ObjectID("5bbacd427aa3035233e200405"), "NAME" : "JOHN", "ID" : 1, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 56 }
+{ "_ID" : ObjectID("5bbacd5b7aa3035233e200406"), "NAME" : "SAM", "ID" : 2, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+{ "_ID" : ObjectID("5bbacd637aa3035233e200407"), "NAME" : "SAMAR", "ID" : 3, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+{ "_ID" : ObjectID("5bbacd3067aa3035233e2004030"), "NAME" : "SCOTT", "ID" : 4, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 730 }
+{ "_ID" : ObjectID("5bbacd9c7aa3035233e200409"), "NAME" : "STIFF", "ID" : 5, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 930 }
+
+> DB.STUD_08.FINDONE()
+{
+	"_ID" : ObjectID("5bbacc527aa3035233e200402"),
+	"NAME" : "JOHN",
+	"ID" : 1,
+	"BRANCH" : "IT",
+	"CLASS" : "TE"
+}
+
+> DB.STUD_08.FIND( { $OR: [ { QUANTITY: { $LT: 50 } }, { MARKS:45}]});
+{ "_ID" : ObjectID("5bbacd5b7aa3035233e200406"), "NAME" : "SAM", "ID" : 2, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+{ "_ID" : ObjectID("5bbacd637aa3035233e200407"), "NAME" : "SAMAR", "ID" : 3, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+
+> DB.INVENTORY.FIND( { PRICE: { $NOT: { $GT: 1.99 } } } )
+{ "_ID" : ObjectID("59f2abf249d7cab054036644"), "ITEm" : "JOURNAL", "qty" : 25, "tags" : [ "blanks", "red" ], "dim_cm" : [ 14, 21 ] }
+{ "_ID" : ObjectID("59f2abf249d7cab054036645"), "ITEm" : "NOTEBOOK", "qty" : 50, "tags" : [ "red", "blanks" ], "dim_cm" : [ 14, 21 ] }
+{ "_ID" : ObjectID("59f2abf249d7cab054036646"), "ITEm" : "PAPER", "qty" : 100, "tags" : [ "red", "blank", "plain" ], "dim_cm" : [ 14, 21 ] }
+{ "_ID" : ObjectID("59f2abf249d7cab054036647"), "ITEm" : "PLANNER", "qty" : 45, "tags" : [ "blue" ], "dim_cm" : [ 10, 15.25 ] }
+
+> DB.STUD_08.FIND( { MARKS: { $NOT: { $GT: 45} } } )
+{ "_ID" : ObjectID("5bbacd5b7aa3035233e200406"), "NAME" : "SAM", "ID" : 2, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+{ "_ID" : ObjectID("5bbacd637aa3035233e200407"), "NAME" : "SAMAR", "ID" : 3, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 45 }
+
+> DB.STUD_08.FIND( { $AND: [ { MARKS: { $NE: 45 } }, { MARKS: { $EXISTS: TRUE } } ] } )
+{ "_ID" : ObjectID("5bbacd427aa3035233e200405"), "NAME" : "JOHN", "ID" : 1, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 56 }
+{ "_ID" : ObjectID("5bbacd3067aa3035233e2004030"), "NAME" : "SCOTT", "ID" : 4, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 730 }
+{ "_ID" : ObjectID("5bbacd9c7aa3035233e200409"), "NAME" : "STIFF", "ID" : 5, "BRANCH" : "IT", "CLASS" : "TE", "MARKS" : 930 }
+
+> DB.STUD_08.insert({NAME:NULL,ID:9,BRANCH:"CIVIL",MARKS:300});
+WrITEResult({ "ninsertEd" : 1 })
+
+> DB.INVENTORY.FIND({TAGS:{$ALL:["RED","BLANKS"]}})
+{ "_ID" : ObjectID("59f2abf249d7cab054036644"), "ITEm" : "JOURNAL", "qty" : 25, "tags" : [ "blanks", "red" ], "dim_cm" : [ 14, 21 ] }
+{ "_ID" : ObjectID("59f2abf249d7cab054036645"), "ITEm" : "NOTEBOOK", "qty" : 50, "tags" : [ "red", "blanks" ], "dim_cm" : [ 14, 21 ] }
+
+
+
